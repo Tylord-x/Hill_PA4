@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 public class DuplicateCounter {
 	private int wordCounter;
-	private Map<String, Integer> countWords;
+	private Map<String, Integer> wordCount;
 	   public DuplicateCounter() {
-	       this.countWords = new HashMap<String, Integer>();
+	       this.wordCount = new HashMap<String, Integer>();
 	   }
 
 	   public void count(String dataFile) throws FileNotFoundException {
@@ -21,15 +21,15 @@ public class DuplicateCounter {
 	      
 	       while (scnr.hasNext()) {
 	    	   String word = scnr.next();
-	    	   Integer count = countWords.get(word);
+	    	   Integer counter = wordCount.get(word);
 	    	   wordCounter++;
-	    	   if (count != null) {
-	    		   count = count + 1;
+	    	   if (counter != null) {
+	    		   counter++;
 	    	   } 
 	    	   else {
-	    		   count = 1;
+	    		   counter = 1;
 	    	   }
-	    	   countWords.put(word, count);
+	    	   wordCount.put(word, counter);
 	       }
 	       //scnr.close();
 
@@ -37,12 +37,13 @@ public class DuplicateCounter {
 	  
 	   public void write(String outputFile) throws IOException
 	   {
-	       FileWriter fw=new FileWriter(new File(outputFile));
-	       for (Entry<String, Integer> entry : countWords.entrySet()) {
-	    	   fw.write(entry.getKey() + " " + entry.getValue()+"\n");
+	       FileWriter fileWrite=new FileWriter(new File(outputFile));
+	       fileWrite.write("Number of times each word occurs\n\n");
+	       for (Entry<String, Integer> entry : wordCount.entrySet()) {
+	    	   fileWrite.write(entry.getKey() + ": " + entry.getValue()+"\n");
 	       }
-	       fw.write("Number of words in the file :"+wordCounter+"\n");
-	       fw.close();
+	       fileWrite.write("\nNumber of words in the file : "+wordCounter+"\n");
+	       fileWrite.close();
 	      
 	   }
 	}
